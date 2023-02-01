@@ -1,12 +1,14 @@
 import 'dart:js';
 
 import 'package:flutter/material.dart';
-import 'package:ksp_hack/views/addNewUser.dart';
+import 'package:frontend/views/signup_page.dart';
 
 import '../views/home_page.dart';
+
 class AdminDash extends StatefulWidget {
+  const AdminDash({Key? key}) : super(key: key);
   @override
-  _AdminDashState createState() => _AdminDashState();
+  State<AdminDash> createState() => _AdminDashState();
 }
 
 class _AdminDashState extends State<AdminDash> {
@@ -31,10 +33,10 @@ class _AdminDashState extends State<AdminDash> {
             )),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 2.0),
+        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 2.0),
         child: GridView.count(
           crossAxisCount: 2,
-          padding: EdgeInsets.all(3.0),
+          padding: const EdgeInsets.all(3.0),
           children: <Widget>[
             addUser("Add User", Icons.person_add),
             removeUser("Remove User", Icons.delete),
@@ -49,44 +51,41 @@ class _AdminDashState extends State<AdminDash> {
     );
   }
 }
+
 Card addUser(String title, IconData icon) {
   return Card(
       elevation: 1.0,
       margin: EdgeInsets.all(120.0),
       child: Container(
         decoration: BoxDecoration(color: Color.fromRGBO(220, 220, 220, 1.0)),
-        child:  Builder(
-          builder: (context) {
-            return InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => addNewUser()));
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                verticalDirection: VerticalDirection.down,
-                children: <Widget>[
-                  SizedBox(height: 50.0),
-                  Center(
-                      child: Icon(
-                        icon,
-                        size: 40.0,
-                        color: Colors.black,
-                      )),
-                  SizedBox(height: 20.0),
-                  Center(
-                    child:  Text(title,
-                        style:
-                        TextStyle(fontSize: 18.0, color: Colors.black)),
-                  )
-                ],
-              ),
-            );
-          }
-        ),
+        child: Builder(builder: (context) {
+          return InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignupPage()));
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              verticalDirection: VerticalDirection.down,
+              children: <Widget>[
+                const SizedBox(height: 50.0),
+                Center(
+                    child: Icon(
+                  icon,
+                  size: 40.0,
+                  color: Colors.black,
+                )),
+                const SizedBox(height: 20.0),
+                Center(
+                  child: Text(title,
+                      style:
+                          const TextStyle(fontSize: 18.0, color: Colors.black)),
+                )
+              ],
+            ),
+          );
+        }),
       ));
 }
 
@@ -96,33 +95,29 @@ Card removeUser(String title, IconData icon) {
       margin: EdgeInsets.all(120.0),
       child: Container(
         decoration: BoxDecoration(color: Color.fromRGBO(220, 220, 220, 1.0)),
-        child:  Builder(
-            builder: (context) {
-              return InkWell(
-                onTap: () {
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  verticalDirection: VerticalDirection.down,
-                  children: <Widget>[
-                    SizedBox(height: 50.0),
-                    Center(
-                        child: Icon(
-                          icon,
-                          size: 40.0,
-                          color: Colors.black,
-                        )),
-                    SizedBox(height: 20.0),
-                    Center(
-                      child:  Text(title,
-                          style:
-                          TextStyle(fontSize: 18.0, color: Colors.black)),
-                    )
-                  ],
-                ),
-              );
-            }
-        ),
+        child: Builder(builder: (context) {
+          return InkWell(
+            onTap: () {},
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              verticalDirection: VerticalDirection.down,
+              children: <Widget>[
+                SizedBox(height: 50.0),
+                Center(
+                    child: Icon(
+                  icon,
+                  size: 40.0,
+                  color: Colors.black,
+                )),
+                SizedBox(height: 20.0),
+                Center(
+                  child: Text(title,
+                      style: TextStyle(fontSize: 18.0, color: Colors.black)),
+                )
+              ],
+            ),
+          );
+        }),
       ));
 }
