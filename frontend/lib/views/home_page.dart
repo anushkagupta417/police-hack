@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/views/signup_page.dart';
 import '../colors.dart';
 
 import 'login_page.dart';
@@ -76,27 +75,6 @@ Widget getBody(BuildContext context) {
         const SizedBox(
           height: 30,
         ),
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(
-            'You don\'t have any account?',
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.5),
-            ),
-          ),
-          TextButton(
-            onPressed: () async {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => const SignupPage()));
-            },
-            child: const Text(
-              'Sign Up',
-              style:
-                  TextStyle(color: Colors.purple, fontWeight: FontWeight.w500),
-            ),
-          )
-        ])
       ],
     )),
   ));

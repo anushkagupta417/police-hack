@@ -14,8 +14,7 @@ def add_user():
 
     if exists is None:
         newUser = User(id = User.get_id() ,email=em,name=na,role=ro)
-        db.session.add(newUser)
-        db.session.commit()
+        User.addNewUser(newUser)
 
         return jsonify(['User added successfully, check inbox for registraion email'])
     

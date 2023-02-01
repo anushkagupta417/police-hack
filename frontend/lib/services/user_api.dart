@@ -21,4 +21,23 @@ class UserApi {
       throw Exception('Failed to Save User.');
     }
   }
+
+  Future<User> loginUser(String email, String password) async {
+    var client = http.Client();
+    var uri = Uri.parse("http://127.0.0.1:5000/login");
+    final http.Response response = await client.post(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{'email': email, 'password': password}),
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print(json);
+      return User.fromJson(jsonDecode(json));
+    } else {
+      throw Exception('Failed to Save User.');
+    }
+  }
 }

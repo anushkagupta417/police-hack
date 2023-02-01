@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config.from_object('config')
+cors = CORS(app)
 
 from routes.user_bp import user_bp
 from routes.admin_bp import admin_bp
