@@ -1,26 +1,26 @@
 from flask import Flask, request, jsonify
 from flask_migrate import Migrate
-from controllers.com_cntroller import home, login
-import sys
-
-from routes.user_bp import user_bp
-from routes.admin_bp import admin_bp
-
-from user.user import db
 
 app = Flask(__name__)
 app.config.from_object('config')
+
+from routes.user_bp import user_bp
+from routes.admin_bp import admin_bp
+from controllers.com_cntroller import home,login
+from user.user import User,db
+
+db.init_app(app)
+migrate = Migrate(app,db)
 
 app.register_blueprint(user_bp, url_prefix = '/user')
 app.register_blueprint(admin_bp, url_prefix = '/admin')
 
 
 app.route('/',methods=['GET'])(home)
-app.route('/login',methods=['GET'])(login)
+app.route('/login',methods=['POST'])(login)
 
 
 if __name__=='__main__':
-  sys.append.path("..")
   app.run(debug=True,port=5000)
 
 

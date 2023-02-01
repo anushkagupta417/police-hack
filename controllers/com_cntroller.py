@@ -3,11 +3,11 @@ from main import app
 from flask import json, jsonify, request
 import bcrypt
 
-@app.route('/',methods=['GET'])
+@app.route('/',methods=["GET"])
 def home():
     return "Hello World"
 
-@app.route('/login',methods=['POST'])
+@app.route('/login',methods=["POST"])
 def login():
     email = request.json['email']
     password = request.json['password']

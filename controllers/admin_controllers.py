@@ -1,9 +1,10 @@
+
 from user.user import User, db
 from routes.admin_bp import admin_bp
 
 from flask import request, json,jsonify
 
-@admin_bp.route("/addUser",methods = 'POST')
+@admin_bp.route("/addUser",methods = ['POST'])
 def add_user():
     em=request.json['email']
     na = request.json['name']
