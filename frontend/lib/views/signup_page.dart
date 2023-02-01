@@ -11,15 +11,14 @@ class SignupPage extends StatefulWidget {
   State<SignupPage> createState() => _SignupPageState();
 }
 
+enum Roles { user, admin }
+
 class _SignupPageState extends State<SignupPage> {
   final _userEmail = TextEditingController();
-  final _passWord = TextEditingController();
-  final _cnfPass = TextEditingController();
-
+  final _name = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  bool _validateEmail = false;
-  bool _validatePass = false;
+  Roles? _character = Roles.user;
+  bool _value = false;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +73,26 @@ class _SignupPageState extends State<SignupPage> {
                   child: Column(
                     children: [
                       TextFormField(
+                          controller: _name,
+                          validator: (currentValue) {
+                            var nonNullValue = currentValue ?? '';
+                            if (nonNullValue.isEmpty) {
+                              return ("Name is required");
+                            }
+                          },
+                          style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                              color: Color.fromARGB(221, 248, 106, 106)),
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Enter Name',
+                            labelText: 'Name',
+                          )),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      TextFormField(
                           controller: _userEmail,
                           validator: (currentValue) {
                             var nonNullValue = currentValue ?? '';
@@ -97,49 +116,45 @@ class _SignupPageState extends State<SignupPage> {
                       const SizedBox(
                         height: 20.0,
                       ),
-                      TextFormField(
-                          controller: _passWord,
-                          obscureText: true,
-                          validator: (passCurrentValue) {
-                            RegExp regex = RegExp(
-                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-                            var passNonNullValue = passCurrentValue ?? "";
-                            if (passNonNullValue.isEmpty) {
-                              return ("Password is required");
-                            } else if (passNonNullValue.length < 6) {
-                              return ("Password Must be more than 5 characters");
-                            } else if (!regex.hasMatch(passNonNullValue)) {
-                              return ("Password should contain upper, lower, digit and Special character ");
-                            }
-                            return null;
-                          },
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Enter Password',
-                            labelText: 'Password',
-                          )),
-                      const SizedBox(
-                        height: 20.0,
+                      Column(
+                        children: [
+                          const Text(
+                            "Assign Role",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: Color.fromARGB(221, 248, 106, 106)),
+                          ),
+                          Divider(),
+                          ListTile(
+                            title: const Text('Admin'),
+                            leading: Radio<Roles>(
+                              value: Roles.admin,
+                              groupValue: _character,
+                              onChanged: (Roles? value) {
+                                setState(() {
+                                  _character = value;
+                                  _value = true;
+                                });
+                              },
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('User'),
+                            leading: Radio<Roles>(
+                              value: Roles.user,
+                              groupValue: _character,
+                              onChanged: (Roles? value) {
+                                setState(() {
+                                  _character = value;
+                                  _value = false;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                      TextFormField(
-                          controller: _cnfPass,
-                          obscureText: true,
-                          validator: (String? passCurrentValue) {
-                            if (passCurrentValue != null &&
-                                passCurrentValue.isEmpty) {
-                              return "Retype Password";
-                            }
-                            if (passCurrentValue != _passWord.text) {
-                              return "Password Doesn't match";
-                            }
-
-                            return null;
-                          },
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Re-enter Password',
-                            labelText: 'Confirm Password',
-                          )),
                       const SizedBox(
                         height: 20.0,
                       ),
@@ -148,22 +163,18 @@ class _SignupPageState extends State<SignupPage> {
                         height: 60,
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            if (_validateEmail == false &&
-                                _validatePass == false) {
-                              var res = await UserApi()
-                                  .addUser(_userEmail.text, _passWord.text);
-                              Navigator.pop(context, res);
-                            }
-                          } else {
-                            _validateEmail = true;
-                            _validatePass = true;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Processing")));
+
+                            var res = await UserApi().addNewUser(
+                                _name.text, _userEmail.text, _value);
                           }
                         },
                         color: const Color.fromARGB(255, 252, 88, 88),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(40)),
                         child: const Text(
-                          "Sign Up",
+                          "Add",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
@@ -173,25 +184,6 @@ class _SignupPageState extends State<SignupPage> {
                       const SizedBox(
                         height: 20,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Already have an account? "),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            const LoginPage()));
-                              },
-                              child: const Text(
-                                "Login",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 18),
-                              ))
-                        ],
-                      )
                     ],
                   ),
                 ),

@@ -203,11 +203,6 @@ class _LoginPageState extends State<LoginPage> {
                                         showSnacBar(context, res.status);
                                       }
                                     }
-                                  } else {
-                                    setState(() {
-                                      _validateEmail = true;
-                                      _validatePass = true;
-                                    });
                                   }
                                 },
                                 color: const Color.fromARGB(255, 252, 88, 88),

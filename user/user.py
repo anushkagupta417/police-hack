@@ -20,6 +20,16 @@ class User(db.Model):
   emVerified = db.Column(db.Boolean,default = False)
   phVerified = db.Column(db.Boolean,default = False)
 
+  def __init__(self):
+    self.id = 1
+    self.email = "abc@gmail.com"
+    self.name = "ABC"
+    self.phone = "1234567809"
+    self.role = True
+    self.password = "!Sporthi1234"
+    self.designation = "Student"
+    self.password = bcrypt.hashpw(self.password.encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
+    return self
 
   def __init__(self,email,name,role) :
     self.email = email
@@ -32,19 +42,6 @@ class User(db.Model):
     self.phone = phone
     self.password = password
     self.emVerified = emVerified
-
-  def __init__(self):
-    
-    self.id = 1
-    self.email = "abc@gmail.com"
-    self.name = "ABC"
-    self.phone = "1234567809"
-    self.role = True
-    self.password = "!Sporthi1234"
-    self.designation = "Student"
-    self.password = bcrypt.hashpw(self.password.encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
-
-    return self
 
   def get_id(self):
     return self.id
