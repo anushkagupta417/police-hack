@@ -7,6 +7,7 @@ import '../views/home_page.dart';
 
 class AdminDash extends StatefulWidget {
   const AdminDash({Key? key}) : super(key: key);
+
   @override
   State<AdminDash> createState() => _AdminDashState();
 }
