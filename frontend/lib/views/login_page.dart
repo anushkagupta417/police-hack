@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
+import '../dashboards/admin_dashboard.dart';
+import '../dashboards/user_dashboard.dart';
 import '../services/user_api.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final _passWord = TextEditingController();
   bool _validateEmail = false;
   bool _validatePass = false;
-  bool _correctPass = true;
+  final bool _correctPass = true;
 
   @override
   void dispose() {
@@ -30,6 +32,33 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    void showSnacBar(BuildContext context, String msg) {
+      final snacBar = SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              height: 35,
+              decoration: const BoxDecoration(
+                color: Colors.redAccent,
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+              child: Center(
+                child: Text(
+                  msg,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ),
+          ));
+      ScaffoldMessenger.of(context).showSnackBar(snacBar);
+    }
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -124,8 +153,6 @@ class _LoginPageState extends State<LoginPage> {
                                   controller: _passWord,
                                   obscureText: true,
                                   validator: (passCurrentValue) {
-                                    RegExp regex = RegExp(
-                                        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
                                     var passNonNullValue =
                                         passCurrentValue ?? "";
                                     if (passNonNullValue.isEmpty) {
@@ -154,18 +181,40 @@ class _LoginPageState extends State<LoginPage> {
                                         _validatePass == false) {
                                       var res = await UserApi().loginUser(
                                           _userEmail.text, _passWord.text);
-                                      print(res);
+                                      if (res.id != -1) {
+                                        if (res.role == true) {
+                                          // ignore: use_build_context_synchronously
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          const AdminDash()));
+                                        } else {
+                                          // ignore: use_build_context_synchronously
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          const UserDash()));
+                                        }
+                                      } else {
+                                        showSnacBar(context, res.status);
+                                      }
                                     }
                                   } else {
-                                    _validateEmail = true;
-                                    _validatePass = true;
+                                    setState(() {
+                                      _validateEmail = true;
+                                      _validatePass = true;
+                                    });
                                   }
                                 },
                                 color: const Color.fromARGB(255, 252, 88, 88),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(40)),
                                 child: const Text(
-                                  "Sign Up",
+                                  "Login",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16,

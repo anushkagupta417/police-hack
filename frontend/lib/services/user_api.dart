@@ -30,12 +30,27 @@ class UserApi {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{'email': email, 'password': password}),
+      body: jsonEncode(<String, dynamic>{'email': email, 'password': password}),
     );
     if (response.statusCode == 200) {
-      var json = response.body;
-      print(json);
-      return User.fromJson(jsonDecode(json));
+      User instance;
+      if (response.body.contains("resp") == true) {
+        instance = User.fromJson(jsonDecode(response.body));
+      } else {
+        String msg;
+        msg = (response.body.contains("Password"))
+            ? "Password Incorrect"
+            : "Username doesn't exist, please contact the admin";
+        instance = User(
+            id: -1,
+            email: "",
+            password: "",
+            name: "",
+            phone: "",
+            role: false,
+            status: msg);
+      }
+      return instance;
     } else {
       throw Exception('Failed to Save User.');
     }

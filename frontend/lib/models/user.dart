@@ -7,22 +7,38 @@ String userToJson(List<User> data) =>
 
 class User {
   User({
+    required this.id,
     required this.email,
     required this.password,
+    required this.name,
+    required this.phone,
+    required this.role,
+    required this.status,
   });
+  int id;
   String email;
   String password;
+  String name;
+  String phone;
+  bool role;
+  String status;
+
   factory User.fromJson(Map<String, dynamic> json) => User(
-        email: json["email"],
-        password: json["password"],
-      );
+      id: json["id"],
+      email: json["email"],
+      password: json["password"],
+      name: json["name"],
+      phone: json["phone"],
+      role: json["role"],
+      status: json["resp"]);
 
-  Map<String, dynamic> toJson() => {"email": email, "password": password};
-  @override
-  String toString() {
-    String result = email;
-    return result;
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "email": email,
+        "password": password,
+        "role": role,
+        "phone": phone
+      };
+  Map<String, dynamic> retResp() => {"status": status};
 }
-
-

@@ -24,10 +24,19 @@ def login():
         print("Login not empty")
         if(bcrypt.checkpw(password=password.encode('utf-8'),hashed_password=login.password.encode('utf-8'))):
             print("User success")
-            return jsonify(['Success'])
+            resp = jsonify({
+                'id':login.id,
+                'email':login.email,
+                'name':login.name,
+                'password':str(login.password),
+                'phone':login.phone,
+                'role':login.role,
+                'resp':"Logged in"
+            })
+            return resp
         else:
             print("Unsuccessfull")
-            return jsonify(['Wrong password'])
+            return jsonify({"res":"Password incorrect"})
     else:
         print("User doesn't exists")
-        return jsonify(['Username not allowed'])
+        return jsonify({"res":"Username doesn't exist, please contact the admin"})
