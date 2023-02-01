@@ -45,7 +45,7 @@ class _SignupPageState extends State<SignupPage> {
                     height: 30,
                   ),
                   const Text(
-                    "Sign up",
+                    "Add new user as Admin or User",
                     style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -118,13 +118,16 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                       Column(
                         children: [
-                          const Text(
-                            "Assign Role",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                color: Color.fromARGB(221, 248, 106, 106)),
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Assign Role",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromARGB(221, 248, 106, 106)),
+                            ),
                           ),
                           Divider(),
                           ListTile(

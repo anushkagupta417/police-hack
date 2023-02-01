@@ -35,13 +35,15 @@ class User(db.Model):
     self.email = email
     self.name = name
     self.role = role
+    return self
 
   def __init__(self,email,name,phone,password,emVerified) :
     self.email = email
     self.name = name
     self.phone = phone
-    self.password = password
+    self.password = bcrypt.hashpw(self.password.encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
     self.emVerified = emVerified
+    return self
 
   def get_id(self):
     return self.id

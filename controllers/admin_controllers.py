@@ -15,9 +15,12 @@ def add_user():
     if exists is None:
         newUser = User(email=em,name=na,role=ro)
         User.addNewUser(newUser)
+        if(User.query.filter_by(email = em) is not None):
+            resp = "User added successfully"
+            # Send email code to be added
 
-        return jsonify(['User added successfully, check inbox for registraion email'])
+        return 
     
     else:
-
-        return jsonify(['User already exists, please login'])
+        resp = "User already exists, please login"
+        return jsonify({"resp" : resp})
