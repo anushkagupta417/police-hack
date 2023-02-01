@@ -3,13 +3,13 @@ import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:ksp_hack/views/addNewUser.dart';
 
-import 'home_page.dart';
-class Dashboard extends StatefulWidget {
+import '../views/home_page.dart';
+class AdminDash extends StatefulWidget {
   @override
-  _DashboardState createState() => _DashboardState();
+  _AdminDashState createState() => _AdminDashState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _AdminDashState extends State<AdminDash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
