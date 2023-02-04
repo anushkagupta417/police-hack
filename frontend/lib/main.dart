@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/services/user_api.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
 import 'views/home_page.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  bool start = false;
+  start = await UserApi().startApp();
+  if (start)
+    runApp(const MyApp());
+  else
+    print("Something went wrong");
 }
 
 class MyApp extends StatelessWidget {

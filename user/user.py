@@ -20,36 +20,58 @@ class User(db.Model):
   emVerified = db.Column(db.Boolean,default = False)
   phVerified = db.Column(db.Boolean,default = False)
 
-  def __init__(self):
-    self.id = 1
-    self.email = "abc@gmail.com"
-    self.name = "ABC"
-    self.phone = "1234567809"
-    self.role = True
-    self.password = "!Sporthi1234"
-    self.designation = "Student"
-    self.password = bcrypt.hashpw(self.password.encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
-    return self
+  def __init__(self,email,name,role,phone = "",password="",designation=""):
 
-  def __init__(self,email,name,role) :
     self.email = email
     self.name = name
     self.role = role
-    return self
-
-  def __init__(self,email,name,phone,password,emVerified) :
-    self.email = email
-    self.name = name
     self.phone = phone
-    self.password = bcrypt.hashpw(self.password.encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
-    self.emVerified = emVerified
-    return self
+    self.password = bcrypt.hashpw(password.encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
+    self.designation = designation
+    
+  @classmethod
+  def admin(cls):
+    email = "abc@gmail.com"
+    name = "ABC"
+    phone = "1234567809"
+    role = True
+    password = "!Sporthi1234"
+    designation = "Student"
+    return cls(email=email,name=name,role=role,phone=phone,password=password,designation=designation)
+
+
+  @classmethod
+  def addUser(cls,email,name,role) :
+    email = email
+    name = name
+    role = role
+    return cls(email=email,name=name,role=role)
+
+  
+  def create_admin(self):
+    return self.admin()
+    
+
+  def updateUserOnSignup(record,email,name,phone,password,designation,emVerified) :
+
+    record.email = email
+    record.name = name
+    record.phone = phone
+    record.password = bcrypt.hashpw(password.encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
+    record.emVerified = emVerified
+    record.designation = designation
+
+    db.session.commit()
 
   def get_id(self):
     return self.id
   
-  def addNewUser(record):
+  def addNewRecord(record):
     db.session.add(record)
+    db.session.commit()
+
+  def removeUser(record):
+    db.session.delete(record)
     db.session.commit()
 
 class UserSchema(ma.Schema):

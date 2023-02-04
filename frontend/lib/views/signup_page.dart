@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/views/home_page.dart';
+import 'package:frontend/dashboards/admin_dashboard.dart';
 import 'package:frontend/views/login_page.dart';
 
 import '../services/user_api.dart';
@@ -14,6 +14,29 @@ class SignupPage extends StatefulWidget {
 enum Roles { user, admin }
 
 class _SignupPageState extends State<SignupPage> {
+  void showSnacBar(BuildContext context, String msg) {
+    final snacBar = SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            height: 35,
+            child: Center(
+              child: Text(
+                msg,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+        ));
+    ScaffoldMessenger.of(context).showSnackBar(snacBar);
+  }
+
   final _userEmail = TextEditingController();
   final _name = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -129,7 +152,7 @@ class _SignupPageState extends State<SignupPage> {
                                   color: Color.fromARGB(221, 248, 106, 106)),
                             ),
                           ),
-                          Divider(),
+                          const Divider(),
                           ListTile(
                             title: const Text('Admin'),
                             leading: Radio<Roles>(
@@ -166,11 +189,62 @@ class _SignupPageState extends State<SignupPage> {
                         height: 60,
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Processing")));
-
                             var res = await UserApi().addNewUser(
                                 _name.text, _userEmail.text, _value);
+
+                            // ignore: use_build_context_synchronously
+                            showSnacBar(context, "Processing");
+
+                            if (res != 0) {
+                              String msg;
+                              if (res == 1) {
+                                msg =
+                                    "User added successfully, continue to login";
+                              } else if (res == 2) {
+                                msg = "User already exists, login";
+                              } else {
+                                msg =
+                                    "User has to confirm from email, check inbox";
+                              }
+                              // ignore: use_build_context_synchronously
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialog(
+                                        title: const Text("Alert"),
+                                        content: Text(msg),
+                                        actions: <Widget>[
+                                          TextButton(
+                                              onPressed: () => {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                const LoginPage())),
+                                                  },
+                                              child: const Text("OK"))
+                                        ],
+                                      ));
+                            } else {
+                              String msg = "Something went wrong";
+                              Future.delayed(Duration.zero)
+                                  .then((value) => AlertDialog(
+                                        title: const Text("Alert"),
+                                        content: Text(msg),
+                                        actions: <Widget>[
+                                          TextButton(
+                                              onPressed: () => {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                const AdminDash())),
+                                                  },
+                                              child: const Text("OK"))
+                                        ],
+                                      ));
+                            }
                           }
                         },
                         color: const Color.fromARGB(255, 252, 88, 88),

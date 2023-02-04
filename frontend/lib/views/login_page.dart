@@ -40,10 +40,6 @@ class _LoginPageState extends State<LoginPage> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               height: 35,
-              decoration: const BoxDecoration(
-                color: Colors.redAccent,
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
               child: Center(
                 child: Text(
                   msg,

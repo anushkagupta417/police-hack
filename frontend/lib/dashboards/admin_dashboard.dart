@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:frontend/views/signup_page.dart';
 
@@ -19,7 +17,7 @@ class _AdminDashState extends State<AdminDash> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: const Color.fromRGBO(49, 87, 110, 1.0),
-        title: Text('Admin Dashboard'),
+        title: const Text('Admin Dashboard'),
         leading: IconButton(
             onPressed: () {
               Navigator.push(
@@ -41,11 +39,6 @@ class _AdminDashState extends State<AdminDash> {
           children: <Widget>[
             addUser("Add User", Icons.person_add),
             removeUser("Remove User", Icons.delete),
-            // makeDashboardItem("Remove User", Icons.delete),
-            // makeDashboardItem("Alphabet", Icons.alarm),
-            // makeDashboardItem("Alphabet", Icons.alarm),
-            // makeDashboardItem("Alphabet", Icons.alarm),
-            // makeDashboardItem("Alphabet", Icons.alarm)
           ],
         ),
       ),
@@ -56,14 +49,15 @@ class _AdminDashState extends State<AdminDash> {
 Card addUser(String title, IconData icon) {
   return Card(
       elevation: 1.0,
-      margin: EdgeInsets.all(120.0),
+      margin: const EdgeInsets.all(120.0),
       child: Container(
-        decoration: BoxDecoration(color: Color.fromRGBO(220, 220, 220, 1.0)),
+        decoration:
+            const BoxDecoration(color: Color.fromRGBO(220, 220, 220, 1.0)),
         child: Builder(builder: (context) {
           return InkWell(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SignupPage()));
+                  MaterialPageRoute(builder: (context) => const SignupPage()));
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -93,9 +87,10 @@ Card addUser(String title, IconData icon) {
 Card removeUser(String title, IconData icon) {
   return Card(
       elevation: 1.0,
-      margin: EdgeInsets.all(120.0),
+      margin: const EdgeInsets.all(120.0),
       child: Container(
-        decoration: BoxDecoration(color: Color.fromRGBO(220, 220, 220, 1.0)),
+        decoration:
+            const BoxDecoration(color: Color.fromRGBO(220, 220, 220, 1.0)),
         child: Builder(builder: (context) {
           return InkWell(
             onTap: () {},
@@ -104,17 +99,18 @@ Card removeUser(String title, IconData icon) {
               mainAxisSize: MainAxisSize.min,
               verticalDirection: VerticalDirection.down,
               children: <Widget>[
-                SizedBox(height: 50.0),
+                const SizedBox(height: 50.0),
                 Center(
                     child: Icon(
                   icon,
                   size: 40.0,
                   color: Colors.black,
                 )),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 Center(
                   child: Text(title,
-                      style: TextStyle(fontSize: 18.0, color: Colors.black)),
+                      style:
+                          const TextStyle(fontSize: 18.0, color: Colors.black)),
                 )
               ],
             ),
