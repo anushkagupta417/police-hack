@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import '../models/user.dart';
 
@@ -81,5 +80,37 @@ class UserApi {
     } else {
       throw Exception('Failed to Save User.');
     }
+  }
+
+  Future<int> getResults(String image, String search, String name) async {
+    int res = 0;
+    var client = http.Client();
+    var uri = Uri.parse("http://127.0.0.1:5000/admin/search");
+    final http.Response response = await client.post(uri,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+            {"img_path": image, "search_against": search, "name": name}));
+
+    if (response.statusCode == 200) {
+      res = 1;
+    }
+    return res;
+  }
+
+  Future<Map> displayResults() async {
+    Map res = Map();
+    var client = http.Client();
+    var uri = Uri.parse("http://127.0.0.1:5000/admin/search");
+    final http.Response response =
+        await client.get(uri, headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
+
+    if (response.statusCode == 200) {
+      res = jsonDecode(response.body);
+    }
+    return res;
   }
 }

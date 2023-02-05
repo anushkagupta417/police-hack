@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/dashboards/admin_dashboard.dart';
 import 'package:frontend/views/login_page.dart';
-
 import '../services/user_api.dart';
 
 class SignupPage extends StatefulWidget {
@@ -199,7 +198,7 @@ class _SignupPageState extends State<SignupPage> {
                               String msg;
                               if (res == 1) {
                                 msg =
-                                    "User added successfully, continue to login";
+                                    "User added successfully, check inbox to confirm url, then login";
                               } else if (res == 2) {
                                 msg = "User already exists, login";
                               } else {

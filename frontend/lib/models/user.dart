@@ -22,6 +22,7 @@ class User {
   String phone;
   bool role;
   String status;
+  late String token;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
       id: json["id"],
