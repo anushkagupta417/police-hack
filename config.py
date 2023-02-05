@@ -6,6 +6,7 @@ BCRYPT_LOG_ROUNDS = 13
 WTF_CSRF_ENABLED = True
 DEBUG_TB_ENABLED = False
 DEBUG_TB_INTERCEPT_REDIRECTS = False
+SERVER_NAME = "127.0.0.1:5000"
 
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 465
@@ -22,5 +23,5 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 CORS_HEADERS = 'Content-Type'
 
 MAIL_USERNAME = 'spoorthi.mn24'
-MAIL_PASSWORD = 'qfmgkgfmywebyqkp'
+MAIL_PASSWORD = 'nwxotjwiesnfhvqz'
 MAIL_DEFAULT_SENDER = "spoorthi.mn24@gmail.com"

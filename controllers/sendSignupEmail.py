@@ -31,18 +31,14 @@ class SignUpEmail():
         return email
 
     def send_email(self,to,subject,template):
-        command = "echo follow" + " | s-nail -s " + subject + " " + to
-        print(command.split(" "))
         msg = Message(
-            subject,
+            subject = subject,
             recipients = [to],
             html = template,
             sender = app.config["MAIL_DEFAULT_SENDER"]
         )
         try:
-            subprocess.run(command.split(" "))
             st = mail.send(msg)
-            print(st)
             self.status = True
         except Exception as e:
             print(e)

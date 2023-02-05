@@ -4,8 +4,8 @@ from flask_cors import CORS
 from flask_mail import Mail
 
 app = Flask(__name__)
-mail = Mail(app)
 app.config.from_object('config')
+mail = Mail(app)
 cors = CORS(app)
 
 from routes.user_bp import user_bp
@@ -22,6 +22,7 @@ app.register_blueprint(admin_bp, url_prefix = '/admin')
 
 app.route('/',methods=['GET'])(home)
 app.route('/login',methods=['POST'])(login)
+
 
 if __name__=='__main__':
   app.run(debug=True,port=5000)

@@ -1,13 +1,13 @@
 from user.user import User,db
 from main import app
-from flask import json, jsonify, request, url_for, render_template
+from flask import json, jsonify, request
 import bcrypt
 
 from.sendSignupEmail import SignUpEmail
 
 @app.route('/',methods=['GET'])
 def home():
-    return jsonify({"resp" : "start"})
+    return "Hello world"
 
 @app.route('/login',methods=["POST"])
 def login():

@@ -270,11 +270,8 @@ class _AdminDashState extends State<AdminDash> {
                             },
                           ),
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
                         ListTile(
-                          title: const Text('Facial Regeneration'),
+                          title: const Text('Compare Images'),
                           leading: Radio<search_against>(
                             value: search_against.Snap,
                             groupValue: _option,
@@ -295,12 +292,12 @@ class _AdminDashState extends State<AdminDash> {
                               String base64image = base64Encode(img_bytes);
                               var resp = await UserApi()
                                   .getResults(base64image, val, image!.name);
-                              Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          const GetResults()));
+                              // Navigator.push(
+                              //                 context,
+                              //                 MaterialPageRoute(
+                              //                     builder:
+                              //                         (BuildContext context) =>
+                              //                             const GetResults(text: resp['Report'],));
                             },
                             color: const Color.fromARGB(255, 252, 88, 88),
                             shape: RoundedRectangleBorder(
