@@ -12,16 +12,14 @@ class GetResults extends StatefulWidget {
 
 class _GetResultsState extends State<GetResults> {
   bool viz = false;
-
-  void showWidget() {
-    setState(() {
-      viz = true;
-    });
+  String report = '';
+  @override
+  void initState() {
+    report = "Output";
   }
 
   @override
   Widget build(BuildContext context) {
-    String report = "Report will be diplayed here";
     return Scaffold(
         appBar: AppBar(
           title: Text("Here for results"),
@@ -30,14 +28,22 @@ class _GetResultsState extends State<GetResults> {
           child: Center(
               child: Column(
             children: [
-              Visibility(visible: viz, child: Container(child: Text(report))),
-              ElevatedButton(
+              MaterialButton(
+                minWidth: 80,
+                height: 60,
                 child: Text("Generate"),
                 onPressed: () async {
                   var resp = await UserApi().displayResults();
-                  showWidget();
+                  setState(() {
+                    viz = true;
+                    report = resp['Report'];
+                  });
                 },
               ),
+              Visibility(
+                  visible: viz,
+                  child: Container(
+                      padding: const EdgeInsets.all(50), child: Text(report))),
             ],
           )),
         ));
